@@ -1,19 +1,38 @@
 'use strict';
 
 let money = prompt('Ваш бюджет?'),
-    shopName = prompt('Название вашего магазина?'),
+    name = prompt('Название вашего магазина?'),
+    time = 19,
 
     mainList = {
     	budget: money,
-    	shopName: shopName,
+    	shopName: name,
     	shopGoods: [],
     	employers: {},
     	open: false
     }
 
-for(let i = 0; i < 3; i++) {
-	mainList.shopGoods[i] = prompt('Какой тип товаров будем продавать?');
-}    
+for(let i = 0; i < 5; i++) {
+
+    let answer = prompt('Какой тип товаров будем продавать?');
+
+    if((typeof(answer)) === 'string' && (typeof(answer)) === null && answer != '' && answer.length < 50) {
+        console.log('Все верно!');
+        mainList.shopGoods[i] = answer;
+    } else {
+        mainList.shopGoods[i] = answer;  
+    }
+}
+
+if (time < 0) {
+    console.log('Такого просто не может быть')
+} else if(time > 8 && time < 20) {
+    console.log('Время работать!');
+} else if (time < 24) {
+    console.log('Уже слишком поздно!');
+} else {
+    console.log('В сутках только 24 часа!');
+};
 
 alert(mainList.budget / 30);
 
