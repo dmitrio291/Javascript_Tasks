@@ -1,40 +1,63 @@
 'use strict';
 
-let money = prompt('Ваш бюджет?'),
-    name = prompt('Название вашего магазина?'),
-    time = 19,
+let money,
+    name,
+    time,
+    price;
 
-    mainList = {
-    	budget: money,
-    	shopName: name,
-    	shopGoods: [],
-    	employers: {},
-    	open: false
-    }
+function start() {
+   money = prompt('Ваш бюджет?');
 
-for(let i = 0; i < 5; i++) {
+   while(isNaN(money) || money == '' || money == null) {
+       money = prompt('Ваш бюджет?');
+   }
 
-    let answer = prompt('Какой тип товаров будем продавать?');
+   name = prompt('Название вашего магазина?').toUpperCase();
+   time = 21;
+}
 
-    if((typeof(answer)) === 'string' && (typeof(answer)) === null && answer != '' && answer.length < 50) {
-        console.log('Все верно!');
-        mainList.shopGoods[i] = answer;
-    } else {
-        mainList.shopGoods[i] = answer;  
+// start();
+
+let mainList = {
+    budget: money,
+    shopName: name,
+    shopGoods: [],
+    employers: {},
+    open: false,
+    discount: false
+}    
+
+function chooseGoods() {
+    for(let i = 0; i < 5; i++) {
+
+        let answer = prompt('Какой тип товаров будем продавать?');
+
+        if((typeof(answer)) === 'string' && (typeof(answer)) !== null && answer !== '' && answer.length < 50) {
+            console.log('Все верно!');
+            mainList.shopGoods[i] = answer;
+        } else {
+            i = i - 1; 
+        }
     }
 }
 
-if (time < 0) {
-    console.log('Такого просто не может быть')
-} else if(time > 8 && time < 20) {
-    console.log('Время работать!');
-} else if (time < 24) {
-    console.log('Уже слишком поздно!');
-} else {
-    console.log('В сутках только 24 часа!');
-};
+// chooseGoods();
 
-alert(mainList.budget / 30);
+function workTime(time) {
+    if (time < 0) {
+        console.log('Такого просто не может быть')
+    } else if(time > 8 && time < 20) {
+        console.log('Время работать!');
+    } else if (time < 24) {
+        console.log('Уже слишком поздно!');
+    } else {
+        console.log('В сутках только 24 часа!');
+    }
+}
+
+workTime(18);
+
+alert('Ежедневный бюджет ' + mainList.budget / 30);
 
 console.log(mainList);
 
