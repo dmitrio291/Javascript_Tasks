@@ -11,13 +11,13 @@ let money,
 // Функция для запрашивания у пользователя Бюджета (budget) 
 // и Названия магазина (shopName) и проверка правильности ввода
 function start() {
-   money = prompt('Ваш бюджет?');
+   money = prompt('Ваш бюджет?', '');
 
    while(isNaN(money) || money === '' || money === null) {
-       money = prompt('Ваш бюджет?');
+       money = prompt('Ваш бюджет?', '');
    }
 
-   name = prompt('Название вашего магазина?').toUpperCase();
+   name = prompt('Название вашего магазина?', '').toUpperCase();
    time = 21;
 }
 
@@ -29,82 +29,88 @@ let mainList = {
     shopGoods: [],
     employers: {},
     open: false,
-    discount: false
+    discount: false,
+    shopItems: [],
+    // Функция записи в массив Типа товаров (shopGoods) и проверка правильности ввода
+    chooseGoods: function chooseGoods() {
+        for(let i = 0; i < 5; i++) {
+
+            let answer = prompt('Какой тип товаров будем продавать?', '');
+
+            if((typeof(answer)) === 'string' && (typeof(answer)) !== null && answer !== '' && answer.length < 50) {
+                console.log('Все верно!');
+                mainList.shopGoods[i] = answer;
+            } else {
+                i = i - 1; 
+            }
+        }
+    },
+    // Функция проверки времени работы магазина (time), время передаем при вызове
+    workTime: function workTime(time) {
+        if (time < 0) {
+            console.log('Такого просто не может быть')
+        } else if(time > 8 && time < 20) {
+            console.log('Время работать!');
+            mainList.open = true;
+        } else if (time < 24) {
+            console.log('Уже слишком поздно!');
+        } else {
+            console.log('В сутках только 24 часа!');
+        }
+    },
+    // Функция расчета дневного бюджета (mainList.budget)
+    dayBudget: function dayBudget() {
+        alert("Ежедневный бюджет " + mainList.budget / 30);
+    },
+    // Функция дисконтной системы (mainList.discount)
+    makeDiscount: function makeDiscount() {
+        if(mainList.discount) {
+            price = (price/100) * 80;
+            // price *= 0.8;
+            // alert('Цена за товар: ' + price);
+        }
+    },
+    // Функция найма сотрудников (mainList.employers)
+    hireEmployers: function hireEmployers() {
+        for(let i = 1; i < 4; i++) {
+
+            let employerName = prompt("Введите имя сотрудника", '');
+
+            if((typeof(employerName)) === 'string' && (typeof(employerName)) !== null && employerName !== '' && employerName.length < 60) {
+                mainList.employers[i + 1] = employerName;
+                console.log('Сотрудник добавлен');
+            } else {
+                i = i - 1;
+                console.log('Ошибка при вводе имени сотрудника!');
+            }
+        }
+    },
+    chooseShopItems: function chooseShopItems() {
+        let items = prompt('Перечислите через запятую товары', '');
+
+        mainList.shopItems = items.split(',');
+        mainList.shopItems.push(prompt('Подождите, еще', ''));
+        mainList.shopItems.sort();
+    },
+    showGoogs: function showGoogs() {
+        var goods = ['печеньки', 'конфеты', 'мороженное', 'батончики'];
+        goods.forEach(function(item, i, arr) {
+            console.log('У нас вы можете купить ' + arr.join(' '));
+        });
+    }   
 }    
 
-// Функция записи в массив Типа товаров (shopGoods) и проверка правильности ввода
-function chooseGoods() {
-    for(let i = 0; i < 5; i++) {
 
-        let answer = prompt('Какой тип товаров будем продавать?');
-
-        if((typeof(answer)) === 'string' && (typeof(answer)) !== null && answer !== '' && answer.length < 50) {
-            console.log('Все верно!');
-            mainList.shopGoods[i] = answer;
-        } else {
-            i = i - 1; 
-        }
-    }
-}
 
 // chooseGoods();
 
-// Функция проверки времени работы магазина (time), время передаем при вызове 
-function workTime(time) {
-    if (time < 0) {
-        console.log('Такого просто не может быть')
-    } else if(time > 8 && time < 20) {
-        console.log('Время работать!');
-    } else if (time < 24) {
-        console.log('Уже слишком поздно!');
-    } else {
-        console.log('В сутках только 24 часа!');
-    }
-}
-
-workTime(18);
-
-// Функция расчета дневного бюджета (mainList.budget)
-function dailyBudget() {
-    alert(mainList.budget / 30);
-}
-
-// Функция дисконтной системы (mainList.discount)
-function discountSystem() {
-    if(mainList.discount) {
-        price *= 0.8;
-        alert('Цена за товар: ' + price);
-    }
-}
-
-// Функция найма сотрудников (mainList.employers)
-function employersHire() {
-    for(let i = 0; i < 4; i++) {
-
-        let employerName = prompt("Введите имя сотрудника");
-
-        if((typeof(employerName)) === 'string' && (typeof(employerName)) !== null && employerName !== '' && employerName.length < 60) {
-            mainList.employers[i + 1] = employerName;
-            console.log('Сотрудник добавлен');
-        } else {
-            i = i - 1;
-            console.log('Ошибка при вводе имени сотрудника!');
-        }
-    }
-}
+// workTime(18);
 
 // employersHire();
 
 // alert('Ежедневный бюджет ' + mainList.budget / 30);
 
 console.log(mainList);
-
-
-
-
-
-
-
 
 
 
